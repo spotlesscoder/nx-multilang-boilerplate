@@ -28,12 +28,32 @@
                     "codeCoverage": true
                 }
             }
+        },
+        "@nx/webpack:webpack": {
+            "cache": true,
+            "dependsOn": ["^build"],
+            "inputs": ["production", "^production"]
+        },
+        "@nx/eslint:lint": {
+            "cache": true,
+            "inputs": [
+                "default",
+                "{workspaceRoot}/.eslintrc.json",
+                "{workspaceRoot}/.eslintignore",
+                "{workspaceRoot}/eslint.config.js"
+            ]
         }
     },
     "namedInputs": {
         "default": ["{projectRoot}/**/*", "sharedGlobals"],
-        "production": ["default"],
+        "production": [
+            "default",
+            "!{projectRoot}/.eslintrc.json",
+            "!{projectRoot}/eslint.config.js"
+        ],
         "sharedGlobals": []
     },
-    "plugins": ["@monodon/rust"]
+    "plugins": ["@monodon/rust"],
+    "useInferencePlugins": false,
+    "useLegacyCache": true
 }
